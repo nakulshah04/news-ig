@@ -1,16 +1,60 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import * as Linking from 'expo-linking';
+
+const { height } = Dimensions.get('window');
 
 export default function PostCard({ post }) {
   return (
-    <View style={{ margin: 10 }}>
-      <Image source={{ uri: post.imageUrl }} style={{ height: 200, borderRadius: 10 }} />
-      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{post.title}</Text>
-      <Text numberOfLines={3}>{post.description}</Text>
-      <TouchableOpacity onPress={() => Linking.openURL(post.url)}>
-        <Text style={{ color: 'blue' }}>Read more...</Text>
-      </TouchableOpacity>
+    <View style={{ flex: 1, backgroundColor: 'black' }}>
+      {/* Background Image */}
+      <Image
+        source={{ uri: post.imageUrl }}
+        style={{
+          position: 'absolute',
+          height: height,
+          width: '100%'
+        }}
+        resizeMode="cover"
+      />
+
+      {/* Dark overlay */}
+      <View style={{
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'flex-end',
+        padding: 20
+      }}>
+        {/* Title */}
+        <Text style={{
+          color: 'white',
+          fontSize: 24,
+          fontWeight: 'bold'
+        }}>
+          {post.title}
+        </Text>
+
+        {/* Description */}
+        <Text style={{
+          color: '#ddd',
+          marginTop: 10,
+          fontSize: 16
+        }}>
+          {post.description}
+        </Text>
+
+        {/* CTA */}
+        <TouchableOpacity onPress={() => Linking.openURL(post.url)}>
+          <Text style={{
+            marginTop: 12,
+            color: '#4da6ff',
+            fontSize: 16,
+            fontWeight: '600'
+          }}>
+            Read more →
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
